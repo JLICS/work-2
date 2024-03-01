@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main()
+{
+
+    char ogr[81];
+    printf("Vvedite ogranichenie simvolov: ");
+    scanf("%d", &ogr);
+    fflush(stdin);
+    fgets(ogr, sizeof(ogr), stdin);
+    
+for (int i = 0; ogr[i] != '\0'; i++) {
+        if (ogr[i] == 'a' || ogr[i] == 'b') {
+           ogr[i] = toupper(ogr[i]);
+        }
+    }
+    
+    printf("String out: %s", ogr);
+
+    return 0;
+}
