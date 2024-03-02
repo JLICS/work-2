@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 int main() {
-    int m=5;
+    int m;
+    printf("vvedite razmer matrix\n");
+    scanf("%d", &m );
+    
  double matrix[m][m];
     double One = 0;
     double Two = 0;
@@ -28,5 +31,6 @@ int main() {
     printf("Summa 1 dioganal: %lf\n", One);
     printf("Summa 2 dioganal: %lf\n",Two);
     
- return 0; 
+ return 0;
+    
 }
