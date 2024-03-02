@@ -7,9 +7,9 @@ int main()
 
     char ogr[81];
     printf("Vvedite ogranichenie simvolov: ");
-    scanf("%d", &ogr);
-    fflush(stdin);
-    fgets(ogr, sizeof(ogr), stdin);
+    scanf("%s", &ogr);
+    //fflush(stdin);
+    //fgets(ogr, sizeof(ogr), stdin);
     
 for (int i = 0; ogr[i] != '\0'; i++) {
         if (ogr[i] == 'a' || ogr[i] == 'b') {
