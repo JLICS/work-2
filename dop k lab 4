@@ -1,0 +1,22 @@
+double Perimeter(double a, double b, double c) {
+  if(a + b > c && a + c > b && b + c > a){
+        return a + b + c; 
+    }
+else{
+     printf("netu perimetra.\n");
+     return 0;
+    }
+}
+
+
+double ploshad(double a, double b, double c) {
+    if(a + b > c && a + c > b && b + c > a){ 
+    double s = (a + b + c) / 2;
+    return sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+else{
+     printf("netu ploshadi.\n");
+     return 0;
+    
+    }
+}
