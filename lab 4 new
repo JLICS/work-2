@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <math.h>
+#include "lab math.h"
+
+
+
+int main() {
+    double a, b, c;
+
+    printf("vvedite znachenie A: ");
+        scanf("%lf", &a);
+    printf("vvedite znachenie B: ");
+        scanf("%lf", &b);
+    printf("vvedite znachenie C: ");
+        scanf("%lf", &c);
+    
+        double summaperimetera = Perimeter(a, b, c);
+        double summaploshada = ploshad( a, b, c); 
+        
+    printf("perimetr triugolnica %2f\n",summaperimetera);    
+    printf("plashad triugolnica %2f\n",summaploshada);    
+     
+    
+        return 0;
+    
+}
