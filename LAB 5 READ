@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+double slogenie(double matrix, double SMatrix) {
+    return matrix + SMatrix;
+}
+
+int main() {
+    int n;
+    char operation;
+	printf("vvedite razmer matrix\n");
+    scanf("%d", &n );
+    
+	double matrix[n][n];
+    double SMatrix[n][n];
+    int i,j;
+    
+    
+    
+    printf("Ââåäèòå çíàê îïåðàöèè (+, - èëè /): ");
+    scanf("%c", &operation);
+    
+	printf("summa matrix %2f\n",slogenie);
+	
+
+	return 0;
+	}
