@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-double slogenie(double matrix, double SMatrix) {
-    return matrix + SMatrix;
+double slogenie(int matrix[i][j]; int SMatrix[i]j]) {
+    return matrix[i][j] + SMatrix[i][j];
 }
 
 int main() {
@@ -14,8 +14,23 @@ int main() {
     double SMatrix[n][n];
     int i,j;
     
-    
-    
+    printf("vedite znachenia pervoi matrix \n"); 
+    for(i=0; i<n; i++){
+	
+    for(j=0; j<n; j++){
+
+    scanf("%lf", &matrix[i][j]);
+		}
+	}
+	
+	printf("vedite znachenia vtoroi matrix \n"); 
+    for(i=0; i<n; i++){
+	
+    for(j=0; j<n; j++){
+
+    scanf("%lf", &SMatrix[i][j]);
+		}
+	}
     printf("Ââåäèòå çíàê îïåðàöèè (+, - èëè /): ");
     scanf("%c", &operation);
     
