@@ -13,14 +13,17 @@ int main() {
         scanf("%lf", &b);
     printf("vvedite znachenie C: ");
         scanf("%lf", &c);
-    
+     
+    if(a + b > c && a + c > b && b + c > a){
         double summaperimetera = Perimeter(a, b, c);
         double summaploshada = ploshad( a, b, c); 
         
     printf("perimetr triugolnica %2f\n",summaperimetera);    
     printf("plashad triugolnica %2f\n",summaploshada);    
-     
-    
+    }
+    else {
+    printf("treugolnica ne suchestvuet.\n");
+    }
         return 0;
     
 }
