@@ -1,7 +1,18 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+
 #include <stdio.h>
 #include <stdlib.h>
-double slogenie(int matrix[i][j]; int SMatrix[i]j]) {
-    return matrix[i][j] + SMatrix[i][j];
+double** slogenie( int n, double** matrix; double** SMatrix {
+    double**r;
+    
+    return r;
 }
 
 int main() {
@@ -31,7 +42,7 @@ int main() {
     scanf("%lf", &SMatrix[i][j]);
 		}
 	}
-    printf("Ââåäèòå çíàê îïåðàöèè (+, - èëè /): ");
+    printf(" (+, -  /): ");
     scanf("%c", &operation);
     
 	printf("summa matrix %2f\n",slogenie);
