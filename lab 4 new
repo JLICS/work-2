@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <math.h>
-#include "lab math.h"
-
-
+#include "lab_math.h"
+#include <stdbool.h>
 
 int main() {
-    double a, b, c;
-
+    double a, b, c,perometr, plashad;
+    
     printf("vvedite znachenie A: ");
         scanf("%lf", &a);
     printf("vvedite znachenie B: ");
@@ -14,12 +13,12 @@ int main() {
     printf("vvedite znachenie C: ");
         scanf("%lf", &c);
      
-    if(a + b > c && a + c > b && b + c > a){
-        double summaperimetera = Perimeter(a, b, c);
-        double summaploshada = ploshad( a, b, c); 
+    if(istengel(a,b,c)){
+        perometr = P(a, b, c);
+        plashad = S(a, b, c); 
         
-    printf("perimetr triugolnica %2f\n",summaperimetera);    
-    printf("plashad triugolnica %2f\n",summaploshada);    
+    printf("perimetr triugolnica %.3lf\n",perometr);    
+    printf("plashad triugolnica %.3lf\n",plashad);    
     }
     else {
     printf("treugolnica ne suchestvuet.\n");
