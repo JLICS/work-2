@@ -1,8 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*double slogenie(int line_A, int stolb_A, int line_B, int stolb_B){
+    double sum_line =  line_A  +  line_B;
+    double sum_stolb = stolb_A + stolb_B;
+    return sum_line, sum_stolb;
+}*/
 
-int main() {
+double** slogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+    printf("A + B = C\n");
+    for(int l = 0; l < line_A; l++){
+        for(int c = 0; c < stolb_B; c++){                     //получившаяся матрица
+            matrix_C[l][c] = matrix_A[l][c] + matrix_B[l][c];
+            printf("%.2lf ", matrix_C[l][c]);
+
+        }
+        printf("\n");
+    } 
+
+
+ double** minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+    printf("A - B = C\n");
+    for(int l = 0; l < line_A; l++){
+        for(int c = 0; c < stolb_B; c++){                     //получившаяся матрица
+            matrix_C[l][c] = matrix_A[l][c] - matrix_B[l][c];
+            printf("%.2lf ", matrix_C[l][c]);
+
+        }
+        printf("\n");
+    }
+}
+
+
+
+int main(){
    
    int line_A, stolb_A, line_B, stolb_B;
 
@@ -42,7 +73,32 @@ int main() {
         printf("Vvedite znachenie %d stroci matrici B: ", l+1);           
         for(int c=0; c<stolb_B; c++){
             scanf("%lf", &matrix_A[l][c]);
-	}	
-}
+	    }	
+    
+    }
+    
+    printf("\nSum of two matrix: \n");
+    printf("%.2lf        ",slogenie);
+    
+    printf("\nminus of two matrix: \n");
+    printf("%.2lf        ",minus);
+    
+    for(int i=0; i < line_A; i++){
+        free(matrix_A[i]);
+    }
+    free(matrix_A);
+
+
+    for(int i=0; i < line_B; i++){
+        free(matrix_B[i]);
+    }
+    free(matrix_B);
+
+
+    for(int i=0; i < line_A; i++){
+        free(matrix_C[i]);
+    }
+    free(matrix_C);
+    
 	return 0;
 }
