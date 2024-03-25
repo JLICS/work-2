@@ -1,43 +1,55 @@
+//Разместить в динамической памяти 2 массива - 2 матрицы размерностью n на n с элементами 
+//типа double (значения n и элементы массивов ввести с консоли). А 
+//также ввести с консоли знак операции: '+', '-' или '*'. Написать функцию, вычисляющую сумму, 
+//разность или произведение данных матриц (их передать по указателю) 
+//и возвращающую указатель на массив-результат. Разместить эту функцию в отдельном 
+//модуле (отличном от того, где располагается функция main()).
+//Выдать на консоль значения полученного вектора.
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-/*double slogenie(int line_A, int stolb_A, int line_B, int stolb_B){
-    double sum_line =  line_A  +  line_B;
-    double sum_stolb = stolb_A + stolb_B;
-    return sum_line, sum_stolb;
-}*/
+#define M 16 
 
-double** slogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
-    printf("A + B = C\n");
-    for(int l = 0; l < line_A; l++){
-        for(int c = 0; c < stolb_B; c++){                     //получившаяся матрица
+void slogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+    for(int l=0; l<line_A; l++){
+        for(int c=0; c<stolb_B; c++){
             matrix_C[l][c] = matrix_A[l][c] + matrix_B[l][c];
             printf("%.2lf ", matrix_C[l][c]);
 
         }
         printf("\n");
-    } 
+        }
+    }
 
 
- double** minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
-    printf("A - B = C\n");
-    for(int l = 0; l < line_A; l++){
-        for(int c = 0; c < stolb_B; c++){                     //получившаяся матрица
+void minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+    for(int l=0; l<line_A; l++){
+        for(int c=0; c<stolb_B; c++){
             matrix_C[l][c] = matrix_A[l][c] - matrix_B[l][c];
             printf("%.2lf ", matrix_C[l][c]);
 
         }
         printf("\n");
+        }
     }
-}
+void umnogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+    for(int l=0; l<line_A; l++){
+        for(int c=0; c<stolb_B; c++){
+            matrix_C[l][c] = matrix_A[l][c] * matrix_B[l][c];
+            printf("%.2lf ", matrix_C[l][c]);
 
+        }
+        printf("\n");
+        }
+    }
 
-
-int main(){
+int main(char ravno){
    
    int line_A, stolb_A, line_B, stolb_B;
 
-    printf("Kakoi razmer matrici vi hotite? \n");
+    printf("Kakoi razmer vi hotite? \n");
     
 
 
@@ -72,26 +84,36 @@ int main(){
     for(int l=0; l<line_B; l++){
         printf("Vvedite znachenie %d stroci matrici B: ", l+1);           
         for(int c=0; c<stolb_B; c++){
-            scanf("%lf", &matrix_A[l][c]);
+            scanf("%lf", &matrix_B[l][c]);
 	    }	
     
+    
+    matrix_C = (double **)malloc(line_A * sizeof(double));
+    for(int i=0; i<line_A; i++){
+    	matrix_C[i] = (double *)malloc(stolb_A * sizeof(double));
+    	}}    
+    
+    void (*result)(int, int, int, int, double**, double**, double**);
+    printf("vvesti znacenie +,-,*  \n ");
+    scanf("%s", &ravno);
+    for(int i=0;i<M; i++){
+    if(ravno == '+'){
+        result = slogenie;
+        result(line_A,stolb_A,line_B,stolb_B,matrix_A,matrix_B,matrix_C);
+    if(ravno == '-'){
+        result = minus;
+        result(line_A,stolb_A,line_B,stolb_B,matrix_A,matrix_B,matrix_C);
+    if(ravno == '*'){   
+        result = umnogenie;
+        result(line_A,stolb_A,line_B,stolb_B,matrix_A,matrix_B,matrix_C);
+        
+    }   
+    }    
     }
-    
-    printf("\nSum of two matrix: \n");
-    printf("%.2lf        ",slogenie);
-    
-    printf("\nminus of two matrix: \n");
-    printf("%.2lf        ",minus);
-    
-    for(int i=0; i < line_A; i++){
-        free(matrix_A[i]);
     }
     free(matrix_A);
 
 
-    for(int i=0; i < line_B; i++){
-        free(matrix_B[i]);
-    }
     free(matrix_B);
 
 
