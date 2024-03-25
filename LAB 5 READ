@@ -96,26 +96,30 @@ int main(char ravno){
     void (*result)(int, int, int, int, double**, double**, double**);
     printf("vvesti znacenie +,-,*  \n ");
     scanf("%s", &ravno);
-    for(int i=0;i<M; i++){
     if(ravno == '+'){
         result = slogenie;
         result(line_A,stolb_A,line_B,stolb_B,matrix_A,matrix_B,matrix_C);
+    }
     if(ravno == '-'){
         result = minus;
         result(line_A,stolb_A,line_B,stolb_B,matrix_A,matrix_B,matrix_C);
+    }
     if(ravno == '*'){   
         result = umnogenie;
         result(line_A,stolb_A,line_B,stolb_B,matrix_A,matrix_B,matrix_C);
-        
     }   
-    }    
-    }
+    
+    
+    for(int i=0; i < line_A; i++){
+        free(matrix_A[i]);
     }
     free(matrix_A);
-
-
+    
+    for(int i=0; i < line_B; i++){
+        free(matrix_B[i]);
+    }
     free(matrix_B);
-
+    
 
     for(int i=0; i < line_A; i++){
         free(matrix_C[i]);
