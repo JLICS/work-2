@@ -2,6 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-void slogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C);
-void minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C);
-void umnogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C);
+double **slogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C);
+double **minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C);
+double **umnogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C);
