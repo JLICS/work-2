@@ -3,35 +3,29 @@
 #include <math.h>
 
 
-void slogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+double **slogenie(int line_A, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
     for(int l=0; l<line_A; l++){
         for(int c=0; c<stolb_B; c++){
             matrix_C[l][c] = matrix_A[l][c] + matrix_B[l][c];
-            printf("%.2lf ", matrix_C[l][c]);
-
-        }
-        printf("\n");
         }
     }
+            return matrix_C;
+            
+    }        
 
-
-void minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+double **minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
     for(int l=0; l<line_A; l++){
         for(int c=0; c<stolb_B; c++){
             matrix_C[l][c] = matrix_A[l][c] - matrix_B[l][c];
-            printf("%.2lf ", matrix_C[l][c]);
-
-        }
-        printf("\n");
+        	return matrix_C;
+		}
         }
     }
-void umnogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+double **umnogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
     for(int l=0; l<line_A; l++){
         for(int c=0; c<stolb_B; c++){
             matrix_C[l][c] = matrix_A[l][c] * matrix_B[l][c];
-            printf("%.2lf ", matrix_C[l][c]);
-
-        }
-        printf("\n");
+			return matrix_C;
+		}
         }
     }
