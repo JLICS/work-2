@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <math.h>
+#include "func.h"
+#include <stdlib.h>
+
+int main()
+{
+    char c;
+    int i, j, N, M;
+    double **m, **matrix2;
+    printf("Vvedite razmer matrix1: ");
+    scanf("%d", &N);
+    m = (double **)malloc(N * sizeof(double *)); 
+    for (i=0;i<N; i++){
+        m[i] = (double *)malloc(N * sizeof(double)); 
+    }
+    for (i=0;i<N; i++){
+        for (j=0; j<N; j++){
+            printf("m[%d][%d]", i+1, j+1);
+            scanf("%lf", &m[i][j]);
+        }
+    }
+    for (i=0;i<N; i++){
+        for (j=0; j<N; j++){
+            printf("%lf ", m[i][j]);
+        }
+        printf("\n");
+    }
+    printf("Vvedite razmer matrix2: ");
+    scanf("%d", &M);
+    matrix2 = (double **)malloc(M * sizeof(double *)); 
+    for (i=0;i<M; i++){
+        matrix2[i] = (double *)malloc(M * sizeof(double)); 
+    }
+    for (i=0;i<M; i++){
+        for (j=0; j<M; j++){
+            printf("matrix2[%d][%d]", i+1, j+1);
+            scanf("%lf", &matrix2[i][j]);
+        }
+    }
+    for (i=0;i<M; i++){
+        for (j=0; j<M; j++){
+            printf("%lf ", matrix2[i][j]);
+        }
+        printf("\n");
+    }
+    
+    double **m3 = plus(N,M, m, matrix2);
+    printf("Matrix3:\n");
+    for (i=0;i<M; i++){
+        for (j=0; j<M; j++){
+            
+            printf("%lf ", m3[i][j]);
+        }
+        printf("\n");
+    }
+    
+    
+     
+    for (i=0;i<N; i++){
+        free(m[i]);
+    }
+    free(m);
+    for (i=0;i<M; i++){
+        free(matrix2[i]);
+    }
+    free(matrix2);
+    
+    
+    return 0;
+}
