@@ -1,7 +1,7 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define M 16 
 #include "FUNC.h"
 
 int main(char ravno){
@@ -24,11 +24,19 @@ int main(char ravno){
         matrix_A[i] = (double *)malloc(stolb_A * sizeof(double));
     }
     for(int l=0; l<line_A; l++){
-        printf("Vvedite znachenie %d stroci matrici A: ", l+1);           
         for(int c=0; c<stolb_A; c++){
-            scanf("%lf", &matrix_A[l][c]);
+        printf("matrix2[%d][%d]", l+1, c+1);           
+        scanf("%lf", &matrix_A[l][c]);
     }
 }
+
+    for(int l=0; l<line_A; l++){
+        for(int c=0; c<stolb_A; c++){
+            printf("%lf ", matrix_A[l][c]);
+        }
+        printf("\n");
+    }
+    
     printf("Kolichestvo strok matrici B: ");
     scanf("%d", &line_B);
     printf("Kolichestvo stolbcov matrici B: ");
@@ -40,37 +48,61 @@ int main(char ravno){
         matrix_B[i] = (double *)malloc(stolb_B * sizeof(double));
     }
     for(int l=0; l<line_B; l++){
-        printf("Vvedite znachenie %d stroci matrici B: ", l+1);           
-        for(int c=0; c<stolb_B; c++){
+       for(int c=0; c<stolb_B; c++){
+        printf("matrix2[%d][%d]", l+1, c+1);           
             scanf("%lf", &matrix_B[l][c]);
 	    }	
     }
+    
+    for(int l=0; l<line_B; l++){
+       for(int c=0; c<stolb_B; c++){
+          printf("%lf ", matrix_B[l][c]);
+        }
+        printf("\n");
+    }
+           
     matrix_C = (double **)malloc(line_A * sizeof(double *));
     for(int i=0; i<line_A; i++){
     matrix_C[i] = (double *)malloc(stolb_A * sizeof(double));
-    	}    
+    }  
     
-    
-    double **result (int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C);
     printf("vvesti znacenie +,-,*  \n ");
     scanf("%s", &ravno);
-    if(ravno == '+'){
-        **result == **slogenie;
-            for(int l=0; l<line_A; l++){
-                for(int c=0; c<stolb_B; c++){
-			        printf("%.2f ", matrix_C[l][c]);
+    if (ravno == '+')
+    {
+        double **result = slogenie(line_A, stolb_A, line_B, stolb_B, matrix_A, matrix_B, matrix_C);
+
+        for(int l=0; l<line_A; l++){
+            for(int c=0; c<stolb_A; c++){
+    printf("%lf ", result[l][c]);
         }
         printf("\n");
-            
         }
-		}
-    if(ravno == '-'){
-        **result == minus;
-        
     }
-    if(ravno == '*'){   
-        **result == umnogenie;
-    }   
+    else if (ravno == '-')
+    {
+       double **result = minus(line_A, stolb_A, line_B, stolb_B, matrix_A, matrix_B, matrix_C);
+
+        for(int l=0; l<line_A; l++){
+            for(int c=0; c<stolb_A; c++){
+                printf("%lf ", result[l][c]);
+        }
+        printf("\n");
+        }
+    }
+    else if (ravno == '*')
+    {
+        double **result = umnogenie(line_A, stolb_A, line_B, stolb_B, matrix_A, matrix_B, matrix_C);
+        
+        for(int l=0; l<line_B; l++){
+            for(int c=0; c<stolb_B; c++){
+                printf("%lf ", result[l][c]);
+        }
+        printf("\n");
+        }
+    }
+   
+   
     
     
     for(int i=0; i < line_A; i++){
@@ -83,11 +115,10 @@ int main(char ravno){
     }
     free(matrix_B);
     
-
     for(int i=0; i < line_A; i++){
         free(matrix_C[i]);
     }
     free(matrix_C);
-    
+	
 	return 0;
 }
