@@ -3,29 +3,36 @@
 #include <math.h>
 
 
-double **slogenie(int line_A, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+double **slogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+    if (line_A == line_B && stolb_A == stolb_B){
     for(int l=0; l<line_A; l++){
         for(int c=0; c<stolb_B; c++){
             matrix_C[l][c] = matrix_A[l][c] + matrix_B[l][c];
-        }
-    }
-            return matrix_C;
+                }
+            }
+        return matrix_C;        
             
-    }        
-
+        }  
+    }
 double **minus(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
+    if (line_A == line_B && stolb_A == stolb_B){
     for(int l=0; l<line_A; l++){
         for(int c=0; c<stolb_B; c++){
             matrix_C[l][c] = matrix_A[l][c] - matrix_B[l][c];
-        	return matrix_C;
-		}
+		    }
         }
+    return matrix_C;
     }
+}
 double **umnogenie(int line_A, int stolb_A, int line_B, int stolb_B, double **matrix_A, double **matrix_B, double **matrix_C){
-    for(int l=0; l<line_A; l++){
-        for(int c=0; c<stolb_B; c++){
-            matrix_C[l][c] = matrix_A[l][c] * matrix_B[l][c];
-			return matrix_C;
-		}
+    for (int i = 0; i < line_A; i++) {
+        for (int j = 0; j < stolb_B; j++) {
+            matrix_C[i][j] = 0;
+            for (int k = 0; k < stolb_A; k++) {
+                matrix_C[i][j] += matrix_A[i][k] * matrix_B[k][j];       
+            }
         }
     }
+			return matrix_C;
+		
+}
