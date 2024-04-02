@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    FILE *file1, *file2;
+    char l[80];
+	
+    file1 = fopen("file_in.txt", "r");
+   
+
+    file2 = fopen("file_out.txt", "w");
+
+    while (fgets(l, 80, file1)){ 
+        int year;
+		sscanf(l, "%*s %*s %*s %d", &year);
+        if (year < 1980) {
+            fputs(l, file2);
+        }
+	}
+
+    return 0;
+}
