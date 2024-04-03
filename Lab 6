@@ -11,7 +11,7 @@ int main() {
 
     while (fgets(l, 80, file1)){ 
         int year;
-		sscanf(l, "%*s %*s %*s %d", &year);
+		fscanf(l, "%*s %*s %*s %d", &year);
         if (year < 1980) {
             fputs(l, file2);
         }
