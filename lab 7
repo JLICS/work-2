@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,17 +8,9 @@ struct humen {
     char birth_year[10];
 };
 
-int bithday(const void *a, const void *b) {
-    struct humen *n_a = (struct humen *) a;
-    struct humen *n_b = (struct humen *) b;
-
-    return strcmp(n_a->birth_year, n_b->birth_year);
-
-}
-
 int main() {
     struct humen people[4];
-    int i;
+    int i, j, k;
     for (i = 0; i < 4; i++) {
         printf("Enter person %d:\n", i + 1);
         printf("name: ");
@@ -30,11 +20,18 @@ int main() {
         printf("birth_year: ");
         scanf("%s", people[i].birth_year);
     }
-	
-	qsort(people, 4, sizeof(struct humen), bithday);
-    
-	
-	printf("\nUnsorted:\n");
+
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4 - i; j++) {
+            if (strcmp(people[j].birth_year, people[j + 1].birth_year) > 0) {
+                struct humen temp = people[j];
+                people[j] = people[j + 1];
+                people[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("\nSorted by birth_year:\n");
     for (i = 0; i < 4; ++i) {
         printf("%s %s, birth_year: %s\n", people[i].name, people[i].surname, people[i].birth_year);
     }
