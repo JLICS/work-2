@@ -36,6 +36,7 @@ void output(int num)
 {
   int n,m,i,j;
   printf(" Picture # %d\n",num);
+  
   m=M[num]; n=N[num];
   for (i=0; i<m; i++)
    {
@@ -43,114 +44,97 @@ void output(int num)
       putchar(pic[num][i][j]);
     putchar('\n');
    }
- 
+ }
+ void clean(int i) {
+	 int j,k;
+	 for (j=0; j<M[i]; j++)
+		 for (k=0;k<N[i]; k++)
+			 pic[i][j][k] = ' ';
 }
-
-void clean(int i)
-{
-    int m = M[i], n = N[i];
-    for (int j = 0; j < m; j++) {
-        for (int k = 0; k < n; k++) {
-            pic[i][j][k] = ' ';
-        }
-    }
-}
-
 void inverse(int i)
 {
-    int m = M[i], n = N[i];
-    for (int j = 0; j < m; j++) {
-        for (int k = 0; k < n; k++) {
-            if (pic[i][j][k] == ' ') {
-                pic[i][j][k] = '*';
-            } else {
-                pic[i][j][k] = ' ';
-            }
-        }
-    }
+    // для инверсии картинки
+    int j, k;
+    for (j = 0; j < M[i]; j++)
+        for (k = 0; k < N[i]; k++)
+            pic[i][j][k] = (pic[i][j][k] == ' ') ? '@' : ' ';
 }
 
 void rotate_r(int i)
 {
-    int m = M[i], n = N[i];
-    char **temp = malloc(n * sizeof(char *));
-    for (int j = 0; j < n; j++) {
-        temp[j] = malloc(m * sizeof(char));
+	int j,k;
+    // для поворота картинки по часовой стрелке
+    char **temp = pic[i];
+    pic[i] = (char **)malloc(N[i] * sizeof(char *));
+    for (j = 0; j < N[i]; j++)
+    {
+        pic[i][j] = (char *)malloc(M[i]);
+        for (k = 0; k < M[i]; k++)
+            pic[i][j][k] = temp[M[i] - 1 - k][j];
     }
-    for (int j = 0; j < m; j++) {
-        for (int k = 0; k < n; k++) {
-            temp[k][m - j - 1] = pic[i][j][k];
-        }
-    }
-    for (int j = 0; j < n; j++) {
-        for (int k = 0; k < m; k++) {
-            pic[i][k][j] = temp[j][k];
-        }
-    }
-    for (int j = 0; j < n; j++) {
-        free(temp[j]);
-    }
-    free(temp);
-    int new_n = m, new_m = n;
-    N[i] = new_n;
-    M[i] = new_m;
+    int t = N[i];
+    N[i] = M[i];
+    M[i] = t;
 }
 
 void rotate_l(int i)
 {
-    int m = M[i], n = N[i];
-    char **temp = malloc(m * sizeof(char *));
-    for (int j = 0; j < m; j++) {
-        temp[j] = malloc(n * sizeof(char));
+    // для поворота против часовой стрелки
+    int j,k;
+	char **temp = pic[i];
+    pic[i] = (char **)malloc(N[i] * sizeof(char *));
+    for (j = 0; j < N[i]; j++)
+    {
+        pic[i][j] = (char *)malloc(M[i]);
+        for (k = 0; k < M[i]; k++)
+            pic[i][j][k] = temp[k][M[i] - 1 - j];
     }
-    for (int j = 0; j < m; j++) {
-        for (int k = 0; k < n; k++) {
-            temp[m - j - 1][k] = pic[i][j][k];
-        }
-    }
-    for (int j = 0; j < m; j++) {
-        for (int k = 0; k < n; k++) {
-            pic[i][k][j] = temp[j][k];
-        }
-    }
-    for (int j = 0; j < m; j++) {
-        free(temp[j]);
-    }
-    free(temp);
-    int new_n = m, new_m = n;
-    N[i] = new_n;
-    M[i] = new_m;
+    int t = N[i];
+    N[i] = M[i];
+    M[i] = t;
 }
 
 void frame(int i, char c)
 {
-    int m = M[i], n = N[i];
-    pic[i][0][0] = c;
-    pic[i][m-1][0] = c;
-    pic[i][0][n-1] = c;
-    pic[i][m-1][n-1] = c;
-    for (int j = 1; j < m-1; j++) {
+	int j,k;
+    // для создания рамки из символов с
+    for (j = 0; j < M[i]; j++)
+    {
         pic[i][j][0] = c;
-        pic[i][j][n-1] = c;
+        pic[i][j][N[i] - 1] = c;
     }
-    for (int j = 1; j < n-1; j++) {
+    for (j = 0; j < N[i]; j++)
+    {
         pic[i][0][j] = c;
-        pic[i][m-1][j] = c;
+        pic[i][M[i] - 1][j] = c;
     }
 }
 
 void dotting(int i)
 {
-    int m = M[i], n = N[i];
-    for (int j = 0; j < m; j++) {
-        for (int k = 0; k < n; k++) {
-            if (pic[i][j][k] == ')
-    }
-    }
+    int j,k;
+	// для заполнения пробелов в картинке точками
+    for (j = 0; j < M[i]; j++)
+        for (k = 0; k < N[i]; k++)
+            if (pic[i][j][k] == ' ')
+                pic[i][j][k] = '@';
 }
 
-int main(int argc, char *argv[])
+void save(int i, char *filename)
 {
+   int j,k;
+    // для сохранения «картинки» с номером i в файл с именем filename
+    FILE *FO = fopen(filename, "w");
+    for (j = 0; j < M[i]; j++)
+    {
+        for (k = 0; k < N[i]; k++)
+            fprintf(FO, "%c", pic[i][j][k]);
+        fprintf(FO, "\n");
+    }
+    fclose(FO);
+}
+
+int main(int argc, char *argv[]){
   FILE *F, *FO;
   int i;
   char filename[256]="pic1.txt";
@@ -164,6 +148,19 @@ int main(int argc, char *argv[])
    output(0);
    input(2,"picB.txt");
    output(2);
+   clean(2);// СЌС‚Рѕ РґР»СЏ РІС‹РІРѕРґР° РєР°СЂС‚РёРЅРєРё РјС‹ Р·Р°РґР°С‘Рј Р·РЅР°С‡РµРЅРёРµ (2) Рё СЃС‚Р°РІРёРј РЅР°Р·РІР°РЅРёРµ (void(clean)-СЌС‚Рѕ РїСЂРёРјРµСЂ)
+   output(2);
+   inverse(0);
+   output(0);
+   rotate_r(0);
+   output(0);
+   rotate_l(0);
+   output(0);
+   frame(0,'*');
+   output(0);
+   dotting(0);
+   output(0);
+   save(0, "picSaved.txt");
    
   fclose(F);
    return 0;
