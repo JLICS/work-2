@@ -1,0 +1,243 @@
+// ????? ??? ???????, ?????????? ??????:
+// ?????????? ?????? ????????, ?????????, ??????? ?????????? ???????
+#include <stdio.h>
+#include <stdlib.h>
+#define DEBUG 3 
+// #undef DEBUG
+#define ISBIT(n,x) (((01<<(n))&(x))?1:0)
+
+
+
+
+
+
+void outbyte( char byte)
+{          // ????? ????? ? ???????? ????
+  int i;
+  for ( i=7; i>-1; i-- )
+    putchar(ISBIT((i),byte)?'*':' ');
+  fflush(stdout);
+}
+
+void outbytes( int n, char *byte)
+{          // ????? ??????? ?????? ? ???????? ????
+  int i;
+ for (i=0; i<n; i++)
+   outbyte(byte[i]);
+ putchar('\n');
+}
+
+
+
+typedef struct img { //  ????????? ????? - ????????
+   int w; int h;  // ?????? ? ?????? ? ?????????
+   int dx;      // ?????????? ?? ?????????? ????? (???? ?????)
+   int count;   // ?????? ???????? ?????
+   int id;      // ???????????? - "?????" ?????
+   int bytes;   // /?????????? ?????? ? ??????? ?????
+   double density;
+   int diam;
+   int perim;
+   int conn;
+   unsigned char *data;  //  ??????? ????? (?????????????)
+  } IMG;
+ 
+int popcnt8 ( unsigned char i)
+{   int count;
+     count=0;
+     while(i)
+     { ++count;
+       i=(i-1)&i; }
+      return count;
+}
+
+
+IMG *init_img(int id, int w, int h)
+{             // ???????? ??????? (???????) ????? ? ????????? ?????????
+ IMG *t;
+ t=(IMG *)malloc(sizeof(IMG)); 
+  t->w=w; t->h=h; t->dx=0;
+  t->count=0;
+  t->id=id;
+  t->bytes=(((w+7)/8)*h);
+  t->data=(unsigned char *)calloc(t->bytes,1);
+ return t;
+}
+
+
+
+IMG *load_img(int argc, char *filename)
+{
+   FILE *F;
+   IMG *I;
+   int c;
+   int x, y;
+   
+   F = fopen(filename, "rb");
+   if (!F)
+   {
+      printf("Error opening file %s\n", filename);
+      exit(1);
+   }
+   
+   fread(&I->w, 4, 1, F);
+   fread(&I->h, 4, 1, F);
+   I->bytes = I->w * I->h;
+   I->data = malloc(I->bytes);
+   
+   fread(I->data, 1, I->bytes, F);
+   fclose(F);
+   
+   return I;
+}
+
+void dfs(IMG *img, int i, int j, int visited[img->h][img->w]) {
+    if (i < 0 || i >= img->h || j < 0 || j >= img->w) {
+        return;
+    }
+    if (visited[i][j]) {
+        return;
+    }
+    if (!ISBIT(7 - j % 8, img->data[i * (img->bytes / img->h) + j / 8])) {
+        return;
+    }
+    visited[i][j] = 1;
+    dfs(img, i + 1, j, visited);
+    dfs(img, i - 1, j, visited);
+    dfs(img, i, j + 1, visited);
+    dfs(img, i, j - 1, visited);
+}
+
+
+
+int count_black_pixels(IMG *img,int i, int j) {
+    int count = 0;
+    for (i = 0; i < img->h; i++) {
+        for (j = 0; j < img->w; j++) {
+            if (ISBIT(7 - j % 8, img->data[i * (img->bytes / img->h) + j / 8])) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int count_connected_components(IMG *img, int i, int j) {
+    int visited[img->h][img->w];
+    int count = 0;
+    for (i = 0; i < img->h; i++) {
+        for (j = 0; j < img->w; j++) {
+            visited[i][j] = 0;
+        }
+    }
+    for (i = 0; i < img->h; i++) {
+        for (j = 0; j < img->w; j++) {
+            if (!visited[i][j] && ISBIT(7 - j % 8, img->data[i * (img->bytes / img->h) + j / 8])) {
+                dfs(img, i, j, visited);
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+int diameter_of_largest_black_region(IMG *img, int i,int j) {
+    int visited[img->h][img->w];
+    int diam = 0;
+    int max_diam = 0;
+    for (i = 0; i < img->h; i++) {
+        for (j = 0; j < img->w; j++) {
+            visited[i][j] = 0;
+        }
+    }
+    for (i = 0; i < img->h; i++) {
+        for (j = 0; j < img->w; j++) {
+            if (!visited[i][j] && ISBIT(7 - j % 8, img->data[i * (img->bytes / img->h) + j / 8])) {
+                int d = diameter(img, i, j, visited);
+                if (d > max_diam) {
+                    max_diam = d;
+                }
+            }
+        }
+    }
+    return max_diam;
+}
+
+int diameter(IMG *img, int i, int j, int visited[img->h][img->w]) {
+    if (i < 0 || i >= img->h || j < 0 || j >= img->w) {
+        return 0;
+    }
+    if (visited[i][j]) {
+        return 0;
+    }
+    if (!ISBIT(7 - j % 8, img->data[i * (img->bytes / img->h) + j / 8])) {
+        return 0;
+    }
+    visited[i][j] = 1;
+    int d1 = diameter(img, i + 1, j, visited);
+    int d2 = diameter(img, i - 1, j, visited);
+    int d3 = diameter(img, i, j + 1, visited);
+    int d4 = diameter(img, i, j - 1, visited);
+    int d = 1 + MAX(MAX(d1, d2), MAX(d3, d4));
+    return d;
+}
+
+int xcomp (IMG **a, IMG **b)
+{
+   return	-(*a)->w+(*b)->w;
+}
+
+int ycomp (IMG **a, IMG **b)
+{
+   return	-(*a)->h+(*b)->h;
+}
+
+ IMG *G[50000];	
+
+ int N;
+
+int ISPIX(int argc, int i, int j)
+    {       if (i<0) return 0;
+	    if (j<0) return 0;
+            if (i>=G[argc]->w) return 0;
+                    if (j>=G[argc]->h) return 0;
+	 return   ISBIT((7-j%8), G[argc]->data[i*(G[argc]->bytes/G[argc]->h) +j/8 ]);
+    }  
+
+int main( int argc, char *argv[])
+{       
+	int i;
+	long int c;
+	int len;
+	unsigned char *s;
+	unsigned long long *t;
+   N = argc-1;
+   while (argc-->1)
+      { 
+         G[argc]=load_img(argc, argv[argc]);
+	 printf("Loaded %s\n",argv[argc]);
+     
+	 c=0;  
+	 t=(unsigned long long *)G[argc]->data;
+	 s=(unsigned char *)G[argc]->data;
+
+	 len=G[argc]->bytes;
+	 for (i=0; i<G[argc]->h; i++)
+	 {
+#ifdef DEBUG
+		 printf("%d %d \n",G[argc]->w,G[argc]->h); fflush(stdout);
+#endif
+
+    outbytes((G[argc]->w+7)/8, &G[argc]->data[i*(G[argc]->w+7)/8]);
+	 }
+   for (i=(len/8)*8; i<len; i++)
+   {       c+=popcnt8(s[i]);
+#ifdef DEBUG
+  printf("COUNT8=%d %d\n",c,i); fflush(stdout);
+#endif
+   }
+     G[argc]->count=c;
+     
+      }
+  printf("%d %d\n",N,c);
+}
