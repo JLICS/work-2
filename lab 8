@@ -1,3 +1,4 @@
+
 /*Создать текстовый файл с записями, включающие имя/фамилию человека, год рождения, пол и рост (в метрах). 
 Упорядочить элементы по году рождения, имени/фамилии, полу или росту. 
 Вывести результат. Указать элемент, по которому следует упорядочить, 
@@ -16,7 +17,7 @@ struct humen {
 
 
 
-int main(char ravno) {
+int main(int ravno) {
    struct humen people[4]; 
 	int i,j;
 	FILE *f2;
@@ -27,7 +28,6 @@ int main(char ravno) {
         fprintf(f2, "%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
     }
     
-int field;
     printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
     scanf("%d", &ravno);
 	
@@ -54,9 +54,9 @@ int field;
        for (i = 0; i < 4; i++) {
         for (j = 0; j < 4 - i; j++) {
             if (strcmp(people[j].birth_year, people[j + 1].birth_year) > 0) {
-                strcpy(struct humen.birth_year, people[j]);
-                strcpy(people[j], people[j + 1]);
-                strcpy(people[j + 1], struct humen.birth_year);
+                strcpy(people->birth_year, people->birth_year[j]);
+                strcpy(people->birth_year[j], people->birth_year[j + 1]);
+                strcpy(people->birth_year[j + 1], people->birth_year);
             }
         }
     }
