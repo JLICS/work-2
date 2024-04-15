@@ -1,0 +1,78 @@
+/*Создать текстовый файл с записями, включающие имя/фамилию человека, год рождения, пол и рост (в метрах). 
+Упорядочить элементы по году рождения, имени/фамилии, полу или росту. 
+Вывести результат. Указать элемент, по которому следует упорядочить, 
+через консоль. А также реализовать возможность задавать несколько полей для упорядочивания.*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct humen {
+    char name[50];
+    char surname[50];
+    char birth_year[10];
+	char sex[10];
+	char rost[10];
+};
+
+
+
+int main(char ravno) {
+   struct humen people[4]; 
+	int i,j;
+	FILE *f2;
+	
+	f2 = fopen("file_lol.txt","r");
+	
+	for (i = 0; i < 4; ++i) {
+        fprintf(f2, "%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
+    }
+    
+int field;
+    printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
+    scanf("%d", &ravno);
+	
+	if (ravno == '1')
+    {
+	
+	
+	
+	
+	
+	
+}
+	if (ravno == '2')
+	{
+
+
+
+
+
+
+}
+	if (ravno == '3')
+	{
+       for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4 - i; j++) {
+            if (strcmp(people[j].birth_year, people[j + 1].birth_year) > 0) {
+                strcpy(struct humen.birth_year, people[j]);
+                strcpy(people[j], people[j + 1]);
+                strcpy(people[j + 1], struct humen.birth_year);
+            }
+        }
+    }
+}
+	if (ravno == '4')
+	{
+
+
+
+
+
+
+}
+	
+
+	
+
+    return 0;
+}
