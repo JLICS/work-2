@@ -1,78 +1,97 @@
-
-/*Создать текстовый файл с записями, включающие имя/фамилию человека, год рождения, пол и рост (в метрах). 
-Упорядочить элементы по году рождения, имени/фамилии, полу или росту. 
-Вывести результат. Указать элемент, по которому следует упорядочить, 
-через консоль. А также реализовать возможность задавать несколько полей для упорядочивания.*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-struct humen {
+struct human {
     char name[50];
     char surname[50];
     char birth_year[10];
-	char sex[10];
-	char rost[10];
+    char sex[10];
+    char rost[10];
 };
 
+int main() {
+    struct human people[4];
+    int i, j;
+    FILE *f2;
 
-
-int main(int ravno) {
-   struct humen people[4]; 
-	int i,j;
-	FILE *f2;
-	
-	f2 = fopen("file_lol.txt","r");
-	
-	for (i = 0; i < 4; ++i) {
-        fprintf(f2, "%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
+    f2 = fopen("file_lol.txt", "r");
+    if (f2 == NULL) {
+        printf("Error opening file\n");
+        return 1;
     }
-    
+
+    for (i = 0; i < 4; ++i) {
+        fscanf(f2, "%s %s %s %s %s", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
+    }
+
+    fclose(f2);
+
+    int field;
     printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
-    scanf("%d", &ravno);
-	
-	if (ravno == '1')
-    {
-	
-	
-	
-	
-	
-	
-}
-	if (ravno == '2')
-	{
+    scanf("%d", &field);
 
-
-
-
-
-
-}
-	if (ravno == '3')
-	{
-       for (i = 0; i < 4; i++) {
-        for (j = 0; j < 4 - i; j++) {
-            if (strcmp(people[j].birth_year, people[j + 1].birth_year) > 0) {
-                strcpy(people->birth_year, people->birth_year[j]);
-                strcpy(people->birth_year[j], people->birth_year[j + 1]);
-                strcpy(people->birth_year[j + 1], people->birth_year);
+    if (field == 1) {
+        // sort by name
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4 - i; j++) {
+                if (strcmp(people[j].name, people[j + 1].name) > 0) {
+                    struct human temp = people[j];
+                    people[j] = people[j + 1];
+                    people[j + 1] = temp;
+                }
+            }
+        }
+    } else if (field == 2) {
+        // sort by surname
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4 - i; j++) {
+                if (strcmp(people[j].surname, people[j + 1].surname) > 0) {
+                    struct human temp = people[j];
+                    people[j] = people[j + 1];
+                    people[j + 1] = temp;
+                }
+            }
+        }
+    } else if (field == 3) {
+        // sort by birth_year
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4 - i; j++) {
+                if (strcmp(people[j].birth_year, people[j + 1].birth_year) > 0) {
+                    struct human temp = people[j];
+                    people[j] = people[j + 1];
+                    people[j + 1] = temp;
+                }
+            }
+        }
+    } else if (field == 4) {
+        // sort by sex
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4 - i; j++) {
+                if (strcmp(people[j].sex, people[j + 1].sex) > 0) {
+                    struct human temp = people[j];
+                    people[j] = people[j + 1];
+                    people[j + 1] = temp;
+                }
+            }
+        }
+    } else if (field == 5) {
+        // sort by rost
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4 - i; j++) {
+                if (strcmp(people[j].rost, people[j + 1].rost) > 0) {
+                    struct human temp = people[j];
+                    people[j] = people[j + 1];
+                    people[j + 1] = temp;
+                }
             }
         }
     }
-}
-	if (ravno == '4')
-	{
 
-
-
-
-
-
-}
-	
-
-	
+    // print sorted array
+    for (i = 0; i < 4; i++) {
+        printf("%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
+    }
 
     return 0;
 }
