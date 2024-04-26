@@ -32,7 +32,6 @@ int main() {
     scanf("%d", &field);
 
     if (field == 1) {
-        // sort by name
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4 - i; j++) {
                 if (strcmp(people[j].name, people[j + 1].name) > 0) {
@@ -43,7 +42,6 @@ int main() {
             }
         }
     } else if (field == 2) {
-        // sort by surname
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4 - i; j++) {
                 if (strcmp(people[j].surname, people[j + 1].surname) > 0) {
@@ -54,7 +52,6 @@ int main() {
             }
         }
     } else if (field == 3) {
-        // sort by birth_year
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4 - i; j++) {
                 if (strcmp(people[j].birth_year, people[j + 1].birth_year) > 0) {
@@ -65,7 +62,6 @@ int main() {
             }
         }
     } else if (field == 4) {
-        // sort by sex
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4 - i; j++) {
                 if (strcmp(people[j].sex, people[j + 1].sex) > 0) {
@@ -76,7 +72,6 @@ int main() {
             }
         }
     } else if (field == 5) {
-        // sort by rost
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4 - i; j++) {
                 if (strcmp(people[j].rost, people[j + 1].rost) > 0) {
@@ -88,7 +83,7 @@ int main() {
         }
     }
 
-  
+    
     for (i = 0; i < 4; i++) {
         printf("%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
     }
