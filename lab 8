@@ -88,7 +88,7 @@ int main() {
         }
     }
 
-    // print sorted array
+  
     for (i = 0; i < 4; i++) {
         printf("%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
     }
