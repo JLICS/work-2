@@ -49,7 +49,7 @@ int main(char ravno){
     for(int i=0; i<line_A; i++){
     matrix_C[i] = (double *)malloc(stolb_A * sizeof(double));
     }    
-    
+    .....
     
     
     printf("vvesti znacenie +,-,*  \n ");
