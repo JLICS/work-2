@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct human {
+    char name[50];
+    char surname[50];
+    char birth_year[10];
+    char sex[10];
+    char rost[10];
+};
+
+int compare(struct human a, struct human b, int field) {
+    if (field == 1)
+        return strcmp(a.name, b.name);
+    else if (field == 2)
+        return strcmp(a.surname, b.surname);
+    else if (field == 3)
+        return strcmp(a.birth_year, b.birth_year);
+    else if (field == 4)
+        return strcmp(a.sex, b.sex);
+    else if (field == 5)
+        return strcmp(a.rost, b.rost);
+    else
+        return 0;
+}
+
+void shell_sort(struct human arr[], int n, int field1, int field2) {
+    int gap, i, j;
+    struct human temp;
+
+    for (gap = n / 2; gap > 0; gap /= 2) {
+        for (i = gap; i < n; i++) {
+            for (j = i - gap; j >= 0 && compare(arr[j], arr[j + gap], field1) > 0; j -= gap) {
+                temp = arr[j];
+                arr[j] = arr[j + gap];
+                arr[j + gap] = temp;
+            }
+        }
+    }
+
+    for (gap = n / 2; gap > 0; gap /= 2) {
+        for (i = gap; i < n; i++) {
+            for (j = i - gap; j >= 0 && compare(arr[j], arr[j + gap], field2) > 0; j -= gap) {
+                temp = arr[j];
+                arr[j] = arr[j + gap];
+                arr[j + gap] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    struct human people[30];
+    int i, j;
+    FILE *f2;
+
+    f2 = fopen("file_lol.txt", "r");
+
+    for (i = 0; i < 30; ++i) {
+        fscanf(f2, "%s %s %s %s %s", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
+    }
+
+    fclose(f2);
+
+    int field1, field2;
+    printf("Enter the first field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
+    scanf("%d", &field1);
+    printf("Enter the second field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
+    scanf("%d", &field2);
+
+    shell_sort(people, 30, field1, field2);
+
+    for (i = 0; i < 30; i++) {
+        printf("%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
+    }
+
+    return 0;
+}
