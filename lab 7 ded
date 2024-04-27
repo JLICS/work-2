@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX 2000
+
+int N, M;
+char l[MAX][MAX];
+int L[MAX][MAX];
+
+void bfs() {
+    int Q1[MAX * MAX], Q2[MAX * MAX];
+    int front = 0, rear = 0;
+
+    int Nc = 1;
+    Q1[rear++] = 0;
+    Q1[rear++] = 0;
+
+    while (front != rear) {
+        int x = Q1[front++];
+        int y = Q1[front++];
+
+        if (x > 0 && L[x-1][y] == INT_MAX) {
+            L[x-1][y] = Nc;
+            Q2[rear++] = x-1;
+            Q2[rear++] = y;
+        }
+        // Проверка для остальных соседних клеток
+
+        if (front == 2*Nc) {
+            Nc++;
+            front = 0;
+            for (int i = 0; i < rear; i++) {
+                Q1[i] = Q2[i];
+            }
+            rear = rear - 2*Nc;
+        }
+    }
+}
+
+void print_result() {
+    if (L[N-1][M-1] == INT_MAX) {
+        printf("Лабиринт непроходим\n");
+    } else {
+        printf("Минимальное количество ходов: %d\n", L[N-1][M-1]);
+        printf("Путь:\n");
+
+        int x = N-1, y = M-1;
+        while (x != 0 || y != 0) {
+            printf("%d %d\n", x, y);
+            // Движение в обратную сторону
+            if (L[x][y] == L[x-1][y] + 1) {
+                x--;
+            } else if (L[x][y] == L[x][y-1] + 1) {
+                y--;
+            } else if (L[x][y] == L[x+1][y] + 1) {
+                x++;
+            } else if (L[x][y] == L[x][y+1] + 1) {
+                y++;
+            }
+        }
+        printf("0 0\n");
+    }
+}
+
+int main() {
+    FILE *file = fopen("Labirint.txt", "r");
+    if (file == NULL) {
+        printf("Ошибка открытия файла\n");
+        return 1;
+    }
+
+    fscanf(file, "%d %d", &N, &M);
+
+    for (int i = 0; i < N; i++) {
+        fscanf(file, "%s", l[i]);
+    }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            if (l[i][j] == '.') {
+                L[i][j] = INT_MAX;
+            } else {
+                L[i][j] = -1;
+            }
+        }
+    }
+
+    bfs();
+    print_result();
+
+    fclose(file);
+
+    return 0;
+}
