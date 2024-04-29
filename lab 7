@@ -18,7 +18,7 @@ int main() {
         printf("last name: ");
         scanf("%s", people[i].surname);
         printf("birth_year: ");
-        scanf("%s", people[i].birth_year);
+        scanf("%s", people[i].birth_year);.
     }
 
     for (i = 0; i < 4; i++) {
