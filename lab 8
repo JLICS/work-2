@@ -28,7 +28,7 @@ int main() {
     fclose(f2);
 
     int field;
-    printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
+    printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");.
     scanf("%d", &field);
 
     if (field == 1) {
