@@ -10,9 +10,12 @@ struct human {
     char rost[10];
 };
 
+
+
+
 int main() {
     struct human people[4];
-    int i, j;
+    int i;
     FILE *f2;
 
     f2 = fopen("file_lol.txt", "r");
@@ -28,62 +31,46 @@ int main() {
     fclose(f2);
 
     int field;
-    printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");.
+    printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
     scanf("%d", &field);
+	
+	if (field == 1){
+	int compare_by_name(const void *a, const void *b) {
+    struct human *ha = (struct human *)a;
+    struct human *hb = (struct human *)b;
+    return strcmp(ha->name, hb->name);
+	}
+	}
+	if (field == 2){
+	int compare_by_surname(const void *a, const void *b) {
+    struct human *ha = (struct human *)a;
+    struct human *hb = (struct human *)b;
+    return strcmp(ha->surname, hb->surname);
+	}
+	}
+	if (field == 3){
+	int compare_by_birth_year(const void *a, const void *b) {
+    struct human *ha = (struct human *)a;
+    struct human *hb = (struct human *)b;
+    return strcmp(ha->birth_year, hb->birth_year);
+	}
+	}
+	if (field == 4){
+	int compare_by_sex(const void *a, const void *b) {
+    struct human *ha = (struct human *)a;
+    struct human *hb = (struct human *)b;
+    return strcmp(ha->sex, hb->sex);
+	}
+	}
+	if (field == 5){
+	int compare_by_rost(const void *a, const void *b) {
+    struct human *ha = (struct human *)a;
+    struct human *hb = (struct human *)b;
+    return strcmp(ha->rost, hb->rost);
+	}
+	}
+    qsort(people, 4, sizeof(struct human), compare_func);
 
-    if (field == 1) {
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4 - i; j++) {
-                if (strcmp(people[j].name, people[j + 1].name) > 0) {
-                    struct human temp = people[j];
-                    people[j] = people[j + 1];
-                    people[j + 1] = temp;
-                }
-            }
-        }
-    } else if (field == 2) {
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4 - i; j++) {
-                if (strcmp(people[j].surname, people[j + 1].surname) > 0) {
-                    struct human temp = people[j];
-                    people[j] = people[j + 1];
-                    people[j + 1] = temp;
-                }
-            }
-        }
-    } else if (field == 3) {
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4 - i; j++) {
-                if (strcmp(people[j].birth_year, people[j + 1].birth_year) > 0) {
-                    struct human temp = people[j];
-                    people[j] = people[j + 1];
-                    people[j + 1] = temp;
-                }
-            }
-        }
-    } else if (field == 4) {
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4 - i; j++) {
-                if (strcmp(people[j].sex, people[j + 1].sex) > 0) {
-                    struct human temp = people[j];
-                    people[j] = people[j + 1];
-                    people[j + 1] = temp;
-                }
-            }
-        }
-    } else if (field == 5) {
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4 - i; j++) {
-                if (strcmp(people[j].rost, people[j + 1].rost) > 0) {
-                    struct human temp = people[j];
-                    people[j] = people[j + 1];
-                    people[j + 1] = temp;
-                }
-            }
-        }
-    }
-
-    
     for (i = 0; i < 4; i++) {
         printf("%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
     }
