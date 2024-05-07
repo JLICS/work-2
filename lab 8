@@ -10,68 +10,92 @@ struct human {
     char rost[10];
 };
 
+int compareHumans1(const struct human *a, const struct human *b, int field1) {
+    if (field1 == 1) {
+        if (strcmp(a->name, b->name) == 0) {
+            return strcmp(a->rost, b->rost);
+        } else {
+            return strcmp(a->name, b->name);
+        }
+    } else if (field1 == 2) {
+        return strcmp(a->surname, b->surname);
+    } else if (field1 == 3) {
+        return strcmp(a->birth_year, b->birth_year);
+    } else if (field1 == 4) {
+        return strcmp(a->sex, b->sex);
+    } else if (field1 == 5) {
+        return strcmp(a->rost, b->rost);
+    }
+    return 0;
+}
 
+int compareHumans2(const struct human *a, const struct human *b, int field2) {
+    if (field2 == 1) {
+        if (strcmp(a->name, b->name) == 0) {
+            return strcmp(a->rost, b->rost);
+        } else {
+            return strcmp(a->name, b->name);
+        }
+    } else if (field2 == 2) {
+        return strcmp(a->surname, b->surname);
+    } else if (field2 == 3) {
+        return strcmp(a->birth_year, b->birth_year);
+    } else if (field2 == 4) {
+        return strcmp(a->sex, b->sex);
+    } else if (field2 == 5) {
+        return strcmp(a->rost, b->rost);
+    }
+    return 0;
+}
 
-
-int main() {
-    struct human people[4];
-    int i;
+int main(int argc, char *argv[]) {
+    struct human people[9];
+    int i, j;
     FILE *f2;
 
     f2 = fopen("file_lol.txt", "r");
-    if (f2 == NULL) {
-        printf("Error opening file\n");
-        return 1;
-    }
 
-    for (i = 0; i < 4; ++i) {
-        fscanf(f2, "%s %s %s %s %s", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);.
+    for (i = 0; i < 9; ++i) {
+        fscanf(f2, "%s %s %s %s %s", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
     }
 
     fclose(f2);
 
-    int field;
+    int field1;
     printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
-    scanf("%d", &field);
-	
-	if (field == 1){
-	int compare_by_name(const void *a, const void *b) {
-    struct human *ha = (struct human *)a;
-    struct human *hb = (struct human *)b;
-    return strcmp(ha->name, hb->name);
-	}
-	}
-	if (field == 2){
-	int compare_by_surname(const void *a, const void *b) {
-    struct human *ha = (struct human *)a;
-    struct human *hb = (struct human *)b;
-    return strcmp(ha->surname, hb->surname);
-	}
-	}
-	if (field == 3){
-	int compare_by_birth_year(const void *a, const void *b) {
-    struct human *ha = (struct human *)a;
-    struct human *hb = (struct human *)b;
-    return strcmp(ha->birth_year, hb->birth_year);
-	}
-	}
-	if (field == 4){
-	int compare_by_sex(const void *a, const void *b) {
-    struct human *ha = (struct human *)a;
-    struct human *hb = (struct human *)b;
-    return strcmp(ha->sex, hb->sex);
-	}
-	}
-	if (field == 5){
-	int compare_by_rost(const void *a, const void *b) {
-    struct human *ha = (struct human *)a;
-    struct human *hb = (struct human *)b;
-    return strcmp(ha->rost, hb->rost);
-	}
-	}
-    qsort(people, 4, sizeof(struct human), compare_func);
+    scanf("%d", &field1);
 
-    for (i = 0; i < 4; i++) {
+	int field2;
+    printf("Enter the field to sort by (1: name, 2: surname, 3: birth_year, 4: sex, 5: rost): \n");
+    scanf("%d", &field2);
+    
+    int swapped1;
+    do {
+        swapped1 = 0;
+        for (i = 0; i < 8; i++) {
+            if (compareHumans1(&people[i], &people[i + 1], field1) > 0) {
+                struct human temp = people[i];
+                people[i] = people[i + 1];
+                people[i + 1] = temp;
+                swapped1 = 1;
+            }
+        }
+    } while (swapped1);
+    
+	int swapped2;
+    do {
+        swapped2 = 0;
+        for (i = 0; i < 8; i++) {
+            if (compareHumans2(&people[i], &people[i + 1], field) > 0) {
+                struct human temp = people[i];
+                people[i] = people[i + 1];
+                people[i + 1] = temp;
+                swapped2 = 1;
+            }
+        }
+    } while (swapped2);
+
+    for (i = 0; i < 9; i++) {
         printf("%s %s %s %s %s\n", people[i].name, people[i].surname, people[i].birth_year, people[i].sex, people[i].rost);
     }
 
