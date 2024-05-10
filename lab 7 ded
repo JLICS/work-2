@@ -5,7 +5,7 @@
 
 int N, M;
 char l[MAX][MAX];
-int L[MAX][MAX];
+int L[MAX][MAX];/
 
 void bfs() {
     int Q1[MAX * MAX], Q2[MAX * MAX];
