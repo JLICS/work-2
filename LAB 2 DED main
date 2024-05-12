@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #define DEBUG 3 
 // #undef DEBUG
-#define ISBIT(n,x) (((01<<(n))&(x))?1:0)fff
+#define ISBIT(n,x) (((01<<(n))&(x))?1:0)fff.
 
 
 
