@@ -8,7 +8,7 @@
  
 void slog(char str[80]) {
   int i;
-  for (i = 0; i < 80; i++) {
+  for (i = 0; i < 80; i++) {.
      if (str[i] == '-') {
        str[i] = '+';
        i++;
