@@ -1,15 +1,20 @@
 /*Написать программу-календарь. Пользователь может указать даты в формате:
-	- гггг.мм.дд – программа вычисляет день недели соответствующий данной дате;
-	- гггг.мм – программа выводит календарь за данный месяц;
-	- гггг – календарь за год;
-	- now – текущую дату*/
+	- гггг.мм.дд - программа вычисляет день недели соответствующий данной дате;
+	- гггг.мм - программа выводит календарь за данный месяц;
+	- гггг - календарь за год;
+	- now - текущую дату.*/
 
 #include <stdio.h>
 #include <time.h>
 
 int main (){
-    time_t t;
-    time_t mytime;
+    
+	time_t t;
+	time_t now;
+	int calc, m, i, j;
+	int motht, god, k, o, l;
+	time_t mytime;
+	time_t mothnow;
 	
 	struct tm *p;
     char s[23];
@@ -44,17 +49,86 @@ int main (){
     strftime(s, 23, format, p);
     printf("den: %s\n", s);
 	
-	char *format1 = "%B";
-    strftime(s, 23, format1, p);
-    printf("mesac: %s\n", s);
+	struct tm *day = localtime(&mytime);
+	
+	printf("day now: %d\n", day->tm_mday);
+	
+	
+	struct tm *celan;
+	
+	char* month1[] = { "January","February", "March","April", "May","June", 
+            "July", "August","September","October", "November","December"};
+	
+	printf("moth: ");
+	scanf("%d",&motht);
+	
+	printf("god: ");
+	scanf("%d",&god);
+	
+	time (&mothnow); 
+    celan = localtime (&mothnow);
+    celan->tm_year = god-1900;
+	celan->tm_mon = motht - 1; 
     
-    char *format2 = "%Y";
-    strftime(s, 23, format2, p);
-    printf("god: %s\n", s);
+	printf("\n                        %s\n",month1[celan->tm_mon]);
+    
+	for(i=1; i<32; i++){
 	
-	struct tm *now = localtime(&mytime);
+	celan->tm_mday = i;
+	mktime(celan);
+	if(celan->tm_mon == k){
 	
-	printf("day now: %d\n", now->tm_mday);
+	if(k == 1){
+	}
+		for(o=0;o<(celan->tm_wday);o++)
+            printf("    ");	
+	}
+
+	printf("%4d",celan->tm_mday);
 	
-	return 0;
+	if(celan->tm_wday==6)
+	printf("\n");
+}
+	struct tm *timeinfo;
+	
+	char* month[] = { "January","February", "March","April", "May","June", 
+            "July", "August","September","October", "November","December"};
+            
+    printf ("\n YEAR: "); 
+	scanf ("%d",&calc);
+    
+	time (&now); 
+    timeinfo = localtime (&now);
+    timeinfo->tm_year = calc-1900; 
+    timeinfo->tm_mon = 0;
+		  
+	m = -1;
+	
+while(m<12){
+
+	for(i=1; i<33; i++){
+	
+	timeinfo->tm_mday = i;
+	
+	mktime(timeinfo);
+	if(timeinfo->tm_mon > m){
+	printf("\n                        %s\n",month[timeinfo->tm_mon]);	
+	
+	for(j=0;j<(timeinfo->tm_wday);j++)
+                printf("    ");
+            m++;
+            break;	
+	}
+	if (m==11 && timeinfo->tm_mon ==0){   
+		m++;
+    	break;
+    }
+
+	printf("%4d",timeinfo->tm_mday);
+	
+	if(timeinfo->tm_wday==6)
+	printf("\n");
+	}
+}
+	return 0;	
 }
