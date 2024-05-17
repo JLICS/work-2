@@ -1,0 +1,60 @@
+/*Написать программу-календарь. Пользователь может указать даты в формате:
+	- гггг.мм.дд – программа вычисляет день недели соответствующий данной дате;
+	- гггг.мм – программа выводит календарь за данный месяц;
+	- гггг – календарь за год;
+	- now – текущую дату*/
+
+#include <stdio.h>
+#include <time.h>
+
+int main (){
+    time_t t;
+    time_t mytime;
+	
+	struct tm *p;
+    char s[23];
+    struct moth{
+        int year;
+        int day;
+        int mesac;
+        int day_now;
+    };
+    struct moth input_date;
+
+    printf("Vvedite god:");
+    scanf("%d", &input_date.year);
+
+    printf("Vvedite day:");
+    scanf("%d", &input_date.day);
+
+    printf("Vvedite mesac:");
+    scanf("%d", &input_date.mesac);
+
+	mytime = time(NULL);
+    t = time(NULL);
+	p = gmtime(&t);
+		
+    p->tm_year = input_date.year - 1900;
+    p->tm_mon = input_date.mesac - 1;
+    p->tm_mday = input_date.day;
+	
+	t = mktime(p);
+	
+    char *format = "%A";
+    strftime(s, 23, format, p);
+    printf("den: %s\n", s);
+	
+	char *format1 = "%B";
+    strftime(s, 23, format1, p);
+    printf("mesac: %s\n", s);
+    
+    char *format2 = "%Y";
+    strftime(s, 23, format2, p);
+    printf("god: %s\n", s);
+	
+	struct tm *now = localtime(&mytime);
+	
+	printf("day now: %d\n", now->tm_mday);
+	
+	return 0;
+}
