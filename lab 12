@@ -8,15 +8,15 @@
 #include <time.h>
 
 int main (){
-    
-	time_t t;
-	time_t now;
-	int calc, m, i, j;
-	int motht, god, k, o, l;
-	time_t mytime;
-	time_t mothnow;
-	
-	struct tm *p;
+
+    time_t t;
+    time_t now;
+    int calc, m, i, j;
+    int motht, god, k, o, l;
+    time_t mytime;
+    time_t mothnow;
+
+    struct tm *p;
     char s[23];
     struct moth{
         int year;
@@ -35,100 +35,104 @@ int main (){
     printf("Vvedite mesac:");
     scanf("%d", &input_date.mesac);
 
-	mytime = time(NULL);
+    mytime = time(NULL);
     t = time(NULL);
-	p = gmtime(&t);
-		
+    p = gmtime(&t);
+
     p->tm_year = input_date.year - 1900;
     p->tm_mon = input_date.mesac - 1;
     p->tm_mday = input_date.day;
-	
-	t = mktime(p);
-	
+
+    t = mktime(p);
+
     char *format = "%A";
     strftime(s, 23, format, p);
     printf("den: %s\n", s);
-	
-	struct tm *day = localtime(&mytime);
-	
-	printf("day now: %d\n", day->tm_mday);
-	
-	
-	struct tm *celan;
-	
-	char* month1[] = { "January","February", "March","April", "May","June", 
-            "July", "August","September","October", "November","December"};
-	
-	printf("moth: ");
-	scanf("%d",&motht);
-	
-	printf("god: ");
-	scanf("%d",&god);
-	
-	time (&mothnow); 
+
+    struct tm *day;
+    char u[80];
+    char *format1 = "%c";
+    mytime = time(NULL);
+    day = gmtime(&mytime);
+    strftime(u,80,format1,day);
+    printf("Time now: %s\n",u);
+
+
+    struct tm *celan;
+
+    char* month1[] = { "January","February", "March","April", "May","June",
+                       "July", "August","September","October", "November","December"};
+
+    printf("moth: ");
+    scanf("%d",&motht);
+
+    printf("god: ");
+    scanf("%d",&god);
+
+    time (&mothnow);
     celan = localtime (&mothnow);
     celan->tm_year = god-1900;
-	celan->tm_mon = motht - 1; 
-    
-	printf("\n                        %s\n",month1[celan->tm_mon]);
-    
-	for(i=1; i<32; i++){
-	
-	celan->tm_mday = i;
-	mktime(celan);
-	if(celan->tm_mon == k){
-	
-	if(k == 1){
-	}
-		for(o=0;o<(celan->tm_wday);o++)
-            printf("    ");	
-	}
+    celan->tm_mon = motht - 1;
 
-	printf("%4d",celan->tm_mday);
-	
-	if(celan->tm_wday==6)
-	printf("\n");
-}
-	struct tm *timeinfo;
-	
-	char* month[] = { "January","February", "March","April", "May","June", 
-            "July", "August","September","October", "November","December"};
-            
-    printf ("\n YEAR: "); 
-	scanf ("%d",&calc);
-    
-	time (&now); 
-    timeinfo = localtime (&now);
-    timeinfo->tm_year = calc-1900; 
-    timeinfo->tm_mon = 0;
-		  
-	m = -1;
-	
-while(m<12){
+    printf("\n                        %s\n",month1[celan->tm_mon]);
 
-	for(i=1; i<33; i++){
-	
-	timeinfo->tm_mday = i;
-	
-	mktime(timeinfo);
-	if(timeinfo->tm_mon > m){
-	printf("\n                        %s\n",month[timeinfo->tm_mon]);	
-	
-	for(j=0;j<(timeinfo->tm_wday);j++)
+    for(i=1; i<32; i++){
+
+        celan->tm_mday = i;
+        mktime(celan);
+        if(celan->tm_mon == k){
+
+            if(k == 1){
+            }
+            for(o=0;o<(celan->tm_wday);o++)
                 printf("    ");
-            m++;
-            break;	
-	}
-	if (m==11 && timeinfo->tm_mon ==0){   
-		m++;
-    	break;
-    }
+        }
 
-	printf("%4d",timeinfo->tm_mday);
-	
-	if(timeinfo->tm_wday==6)
-	printf("\n");
-	}
-}
-	return 0;	
+        printf("%4d",celan->tm_mday);
+
+        if(celan->tm_wday==6)
+            printf("\n");
+    }
+    struct tm *timeinfo;
+
+    char* month[] = { "January","February", "March","April", "May","June",
+                      "July", "August","September","October", "November","December"};
+
+    printf ("\n YEAR: ");
+    scanf ("%d",&calc);
+
+    time (&now);
+    timeinfo = localtime (&now);
+    timeinfo->tm_year = calc-1900;
+    timeinfo->tm_mon = 0;
+
+    m = -1;
+
+    while(m<12){
+
+        for(i=1; i<33; i++){
+
+            timeinfo->tm_mday = i;
+
+            mktime(timeinfo);
+            if(timeinfo->tm_mon > m){
+                printf("\n                        %s\n",month[timeinfo->tm_mon]);
+
+                for(j=0;j<(timeinfo->tm_wday);j++)
+                    printf("    ");
+                m++;
+                break;
+            }
+            if (m==11 && timeinfo->tm_mon ==0){
+                m++;
+                break;
+            }
+
+            printf("%4d",timeinfo->tm_mday);
+
+            if(timeinfo->tm_wday==6)
+                printf("\n");
+        }
+    }
+    return 0;
 }
