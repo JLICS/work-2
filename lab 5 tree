@@ -1,70 +1,129 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-// Это пример сортировки целых чисел при помощи двоичного дерева
-
+// Структура узла двоичного дерева для слов
 struct tnode
 {
-   int data;
-   int count;
-   struct tnode *lchild, *rchild;
+    char *word;
+    int count;
+    struct tnode *left, *right;
 };
 
-struct tnode *tree_find(struct tnode *p, int val);
-struct tnode *tree_find(struct tnode *p, int val);
-int tree_height(struct tnode *p);
-int tree_nodes(struct tnode *p);
-int tree_counts(struct tnode *p);
+// Функция для поиска узла с заданным словом
+struct tnode *tree_find(struct tnode *p, const char *word);
 
-TREE *tree_insert(TREE *p, char *val) {
-    if (p == NULL) {
-        p = (TREE *) malloc(sizeof(TREE));
-        if (p == NULL) {
+// Функция для вставки слова в дерево
+struct tnode *tree_insert(struct tnode *p, const char *word);
+
+// Функция для печати слов в дереве в алфавитном порядке
+void tree_print(struct tnode *p);
+
+// Функция для освобождения памяти, выделенной под дерево
+void tree_free(struct tnode *p);
+
+int main()
+{
+    struct tnode *root = NULL;
+    int n;
+    char word[256];
+
+    printf("Enter the number of words\n");
+    scanf("%d", &n);
+
+    while (n-- > 0)
+    {
+        printf("Enter the word\n");
+        scanf("%s", word);
+
+        root = tree_insert(root, strdup(word));
+    }
+
+    tree_print(root);
+    putchar('\n');
+    fflush(stdout);
+
+    tree_free(root);
+
+    return 0;
+}
+
+// Функция для поиска узла с заданным словом
+struct tnode *tree_find(struct tnode *p, const char *word)
+{
+    int cmp;
+
+    if (p == NULL)
+        return NULL;
+
+    cmp = strcmp(word, p->word);
+    if (cmp < 0)
+        return tree_find(p->left, word);
+    else if (cmp > 0)
+        return tree_find(p->right, word);
+    else
+        return p;
+}
+
+// Функция для вставки слова в дерево
+struct tnode *tree_insert(struct tnode *p, const char *word)
+{
+    int cmp;
+
+    if (p == NULL)
+    {
+        p = (struct tnode *)malloc(sizeof(struct tnode));
+        if (p == NULL)
+        {
             printf("Cannot allocate\n");
             exit(0);
         }
-        p->w = strdup(val);
+
+        p->word = strdup(word);
         p->count = 1;
         p->left = p->right = NULL;
 
         return p;
     }
-    int cmp = my_strcmp(val, p->w);
-    if (cmp < 0) {
-        p->left = tree_insert(p->left, val);
-    } else if (cmp > 0) {
-        p->right = tree_insert(p->right, val);
-    } else {
+
+    cmp = strcmp(word, p->word);
+    if (cmp < 0)
+    {
+        p->left = tree_insert(p->left, word);
+        return p;
+    }
+    else if (cmp > 0)
+    {
+        p->right = tree_insert(p->right, word);
+        return p;
+    }
+    else
+    {
         p->count++;
-    }
-
-    return p;
-}
-/* a function to binary tree in inorder */
-
-void tree_print_to_file(TREE *p, FILE *file) {
-    if (p != NULL) {
-        tree_print_to_file(p->left, file);
-        fprintf(file, "%s %d\n", p->w, p->count);
-        tree_print_to_file(p->right, file);
+        return p;
     }
 }
 
-void main()
+// Функция для печати слов в дереве в алфавитном порядке
+void tree_print(struct tnode *p)
 {
-   struct tnode *root = NULL;
-   int n,x;
-   printf("Enter the number of nodes\n");
-   scanf("%d",&n);
-   while( n-->0)
-     {
-         printf("Enter the data value\n");
-         scanf("%d",&x);
-         root = tree_insert(root,x);
+    if (p != NULL)
+    {
+        tree_print(p->left);
+        printf("%s %d\n", p->word, p->count);
+        tree_print(p->right);
     }
-     tree_print(root);
-     putchar ('\n');
-     fflush(stdout);
 }
 
+// Функция для освобождения памяти, выделенной под дерево
+void tree_free(struct tnode *p)
+{
+    if (p != NULL)
+    {
+        tree_free(p->left);
+        tree_free(p->right);
+        free(p->word);
+        free(p);
+    }
+}
