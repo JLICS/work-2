@@ -1,18 +1,16 @@
 #include <stdio.h>
-#include <ctype.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
-#include <sys/time.h>
-#include <math.h>
-// здесь все что необходимо глобальное
+#include <ctype.h>
+
 typedef struct tree {
-  char *w;   // слово
-  int count; // счетчик слов
-  struct tree *left;
-  struct tree *right; 
+    char *w;   // слово
+    int count; // счетчик слов
+    struct tree *left;
+    struct tree *right;
 } TREE;
 
+// Функция сравнения слов, учитывающая особое положение буквы Ё в таблице кодировки Win-1251
 int my_strcmp(const char *str1, const char *str2) {
     const unsigned char *s1 = (const unsigned char *)str1;
     const unsigned char *s2 = (const unsigned char *)str2;
@@ -28,8 +26,9 @@ int my_strcmp(const char *str1, const char *str2) {
     return tolower(*s1) - tolower(*s2);
 }
 
+// Функция вставки узла в дерево
 TREE *tree_insert(TREE *p, char *val) {
-if (p == NULL) {
+    if (p == NULL) {
         p = (TREE *) malloc(sizeof(TREE));
         if (p == NULL) {
             printf("Cannot allocate\n");
@@ -40,7 +39,7 @@ if (p == NULL) {
         p->left = p->right = NULL;
 
         return p;
-}
+    }
 
     int cmp = my_strcmp(val, p->w);
     if (cmp < 0) {
@@ -50,74 +49,52 @@ if (p == NULL) {
     } else {
         p->count++;
     }
+
     return p;
 }
-    
-    
+
+// Функция обхода дерева в алфавитном порядке
 void tree_inorder(TREE *p) {
-if (p == NULL) {
+    if (p == NULL) {
         return;
     }
 
     tree_inorder(p->left);
     printf("%s: %d\n", p->w, p->count);
     tree_inorder(p->right);
-}  
-    
-    
-int main()
-{
+}
+
+int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("Usage: %s <file1> [<file2> ...]\n", argv[0]);
         return 1;
     }
 
-    FILE *fp;
-    char buf[1024];
-    char *w;
-    int n;
-    
     TREE *tree = NULL;
 
-    for (int i = 1; i < argc; i++) {
-        fp = fopen(argv[i], "r");
-        if (fp == NULL) {
-            perror(argv[i]);
-            continue;
-        }
-        while (fgets(buf, sizeof(buf), fp)) {
-            n = strlen(buf);
-            if (buf[n - 1] == '\n') {
-                buf[n - 1] = '\0';
-            }
-
-            w = strtok(buf, " .,:;-");
-            while (w != NULL) {
-                tree = tree_insert(tree, w);
-                w = strtok(NULL, " .,:;-");
-            }
-        }
-        
+    FILE *fp = fopen("1letter.txt", "r");
+    if (fp == NULL) {
+        perror("1letter.txt");
+        return 1;
     }
 
-    
+    char buf[1024];
+    char *w;
 
-  struct timeval t;
+    while (fgets(buf, sizeof(buf), fp)) {
+        w = strtok(buf, " .,:;-");
+        while (w != NULL) {
+            for (int j = 0; w[j]; j++) {
+                w[j] = tolower(w[j]);
+            }
+            tree = tree_insert(tree, w);
+            w = strtok(NULL, " .,:;-");
+        }
+    }
 
-gettimeofday(&t, NULL);
-long long int T1 = t.tv_sec * 1000000 + t.tv_usec;
+    fclose(fp);
 
-// код программы
+    tree_inorder(tree);
 
-gettimeofday(&t, NULL);
-long long int T2 = t.tv_sec * 1000000 + t.tv_usec;
-printf("Time: %lld microseconds\n", T2 - T1);
-
-
-close(fp);
-tree_inorder(tree);
- 
- return 0;
- 
+    return 0;
 }
- 
